@@ -20,26 +20,52 @@ public class Tester {
         }
         System.out.print("Enter the number of PiggyBank : ");
         int nP = kb.nextInt();
-        PiggyBank [] piggyBank = new PiggyBank[nP];
+        double sum = 0;
+        PiggyBank []piggyBank = new PiggyBank[nP];
         for(int i = 0; i < nP; i++){
             System.out.print("Enter size and number of deposit : ");
+            int totalCount = 0;
+            int oldTotalCount = 0;
             int size = kb.nextInt();
             int numDeposit = kb.nextInt();
             piggyBank[i] = new PiggyBank(size);
             for(int j = 0; j < numDeposit; j++){
                 int type = kb.nextInt();
                 int amount = kb.nextInt();
+                totalCount += amount;
                 if(type == 1){
-                    piggyBank[i].addOne(amount);
+                    if(totalCount <= size) {
+                        piggyBank[i].addOne(amount * 1);
+                    }else if(totalCount > size){
+                        oldTotalCount = totalCount - amount;
+                        amount = size - (totalCount - amount);
+                        totalCount = oldTotalCount + amount;
+                        piggyBank[i].addOne(amount * 1);
+                    }
                 }else if(type == 5){
-                    piggyBank[i].addFive(amount);
+                    if(totalCount <= size) {
+                        piggyBank[i].addFive(amount * 5);
+                    }else if(totalCount > size){
+                        oldTotalCount = totalCount - amount;
+                        amount = size - (totalCount - amount);
+                        totalCount = oldTotalCount + amount;
+                        piggyBank[i].addFive(amount * 5);
+                    }
                 }else if(type == 10){
-                    piggyBank[i].addTen(amount);
+                    if(totalCount <= size) {
+                        piggyBank[i].addTen(amount * 10);
+                    }else if(totalCount > size){
+                        oldTotalCount = totalCount - amount;
+                        amount = size - (totalCount - amount);
+                        totalCount = oldTotalCount + amount;
+                        piggyBank[i].addTen(amount * 10);
+                    }
                 }else{
                     System.out.println("Error Dude");
                 }
             }
-            System.out.println("Total : " + piggyBank[i].getMeasure());
+            sum = piggyBank[i].getMeasure();
+            System.out.println("Total : " + sum);
         }
     }
 }
